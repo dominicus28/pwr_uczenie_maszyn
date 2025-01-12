@@ -1,0 +1,3 @@
+Średnie podobieństwo: 0.7235059142112732
+Wariancja podobieństwa: 0.006876036059111357
+(4078, 4078)

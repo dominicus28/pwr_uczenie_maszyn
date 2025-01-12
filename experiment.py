@@ -1,8 +1,8 @@
 import numpy as np
 import classifier, dataset
 import tabulate
-from sklearn.model_selection import train_test_split, RepeatedKFold
-from sklearn.metrics import confusion_matrix, f1_score
+from sklearn.model_selection import RepeatedKFold
+from sklearn.metrics import f1_score, balanced_accuracy_score
 from scipy import stats
 
 UnderClf = classifier.SMSClassifier(sampling_method="undersampling")
@@ -27,20 +27,26 @@ for i, (train_index, test_index) in enumerate(rkf.split(X_raw, y_raw)):
     for j, (name, clf) in enumerate(CLFs.items()):  # enumerate po CLFs
         clf.fit(X_train, y_train)
         prediction = clf.predict(X_test)
-        score[i, j] = f1_score(y_test, prediction)
+        # score[i, j] = f1_score(y_test, prediction)
+        score[i, j] = balanced_accuracy_score(y_test, prediction)
         # print("Confusion Matrix:", confusion_matrix(y_test, prediction))
 
 np.save('results.npy', score)
 
-print(tabulate.tabulate([['Mean score', '{:.1%}'.format(np.mean(score[:,0])), '{:.1%}'.format(np.mean(score[:,1])),
-                 '{:.1%}'.format(np.mean(score[:,2])), '{:.1%}'.format(np.mean(score[:,3]))],
-                ['Deviation score', '{:.1%}'.format(np.std(score[:,0])), '{:.1%}'.format(np.std(score[:,1])), '{:.1%}'.format(np.std(score[:,2])),
-                 '{:.1%}'.format(np.std(score[:,3]))]],
-               headers=[' ', 'Undersampling', 'Oversampling', 'SMOTE', 'Synthetic']))
-
 
 results = np.load('results.npy')
 
+# print(tabulate.tabulate([['Mean score', '{:.1%}'.format(np.mean(results[:,0])), '{:.1%}'.format(np.mean(results[:,1])),
+#                  '{:.1%}'.format(np.mean(results[:,2]))],
+#                 ['Deviation score', '{:.1%}'.format(np.std(results[:,0])), '{:.1%}'.format(np.std(results[:,1])), '{:.1%}'.format(np.std(results[:,2])),
+#                  ]],
+#                headers=[' ', 'Undersampling', 'Oversampling', 'SMOTE']))
+
+print(tabulate.tabulate([['Mean score', '{:.1%}'.format(np.mean(results[:,0])), '{:.1%}'.format(np.mean(results[:,1])),
+                 '{:.1%}'.format(np.mean(results[:,2])), '{:.1%}'.format(np.mean(results[:,3]))],
+                ['Deviation score', '{:.1%}'.format(np.std(results[:,0])), '{:.1%}'.format(np.std(results[:,1])), '{:.1%}'.format(np.std(results[:,2])),
+                 '{:.1%}'.format(np.std(results[:,3]))]],
+               headers=[' ', 'Undersampling', 'Oversampling', 'SMOTE', 'Synthetic']))
 
 t = np.zeros((len(CLFs),len(CLFs)))
 p = np.zeros((len(CLFs),len(CLFs)))
@@ -59,16 +65,16 @@ for i in range(len(CLFs)):
 
 final = advantage * significant
 
-# print("Statystyka:")
-# print(t)
-# print("P-wartości:")
-# print(p)
-# print("Przewaga:")
-# print(advantage)
-# print("Istotność statycztyczna:")
-# print(significant)
-# print("Końcowa macierz:\n")
-# print(final)
+print("Statystyka:")
+print(t)
+print("P-wartości:")
+print(p)
+print("Przewaga:")
+print(advantage)
+print("Istotność statycztyczna:")
+print(significant)
+print("Końcowa macierz:\n")
+print(final)
 
 means = np.mean(results, axis=0)
 

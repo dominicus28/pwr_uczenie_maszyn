@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+# import api_calls
 
 def prepare_dataset():
     df = pd.read_csv("spam.csv", encoding="latin1", usecols=['v1', 'v2'])
@@ -9,6 +9,26 @@ def prepare_dataset():
     y = np.array([1 if value == "spam" else 0 for value in df['v1'].tolist()])
 
     return X, y
+
+def generate_synthetic_spam(X, y):
+    print(X)
+    print(X.shape)
+    spam_texts = X[y == 1]
+    valid_texts = X[y == 0]
+    n_samples_to_generate = len(valid_texts) - len(spam_texts)
+    print(f"Raw dataset length: {len(X)}")
+    print(f"Valid messages: {len(valid_texts)}")
+    print(f"Spam messages: {len(spam_texts)}")
+    print(f"Synthetic spam messages which will be generated: {n_samples_to_generate}")
+
+    # with open('raw_synthetic_spam.txt', 'a+') as f:
+    #     for _ in range(n_samples_to_generate):
+    #         generated_spam = api_calls.generate_response()
+    #         f.write(f"{str(generated_spam)}\n")
+    #     f.close()
+
+# X, y = prepare_dataset()
+# generate_synthetic_spam(X, y)
 
     # Example dataset
     # X = [

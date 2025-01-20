@@ -1,0 +1,34 @@
+                 Undersampling    Oversampling    SMOTE    Synthetic
+---------------  ---------------  --------------  -------  -----------
+Mean score       96.7%            96.7%           96.5%    95.6%
+Deviation score  0.6%             0.7%            0.7%     0.7%
+Statystyka:
+[[        nan  0.1248956   2.02859453  9.48188883]
+ [-0.1248956          nan  2.45573328  6.07637155]
+ [-2.02859453 -2.45573328         nan  6.32099076]
+ [-9.48188883 -6.07637155 -6.32099076         nan]]
+P-wartości:
+[[           nan 9.03351419e-01 7.31002351e-02 5.56160909e-06]
+ [9.03351419e-01            nan 3.64126327e-02 1.84464455e-04]
+ [7.31002351e-02 3.64126327e-02            nan 1.37516173e-04]
+ [5.56160909e-06 1.84464455e-04 1.37516173e-04            nan]]
+Przewaga:
+[[False  True  True  True]
+ [False False  True  True]
+ [False False False  True]
+ [False False False False]]
+Istotność statycztyczna:
+[[False False False  True]
+ [False False  True  True]
+ [False  True False  True]
+ [ True  True  True False]]
+Końcowa macierz:
+
+[[False False False  True]
+ [False False  True  True]
+ [False False False  True]
+ [False False False False]]
+Random undersampling with 0.967 better than Synthetic oversampling with 0.956
+Random oversampling with 0.967 better than SMOTE with 0.965
+Random oversampling with 0.967 better than Synthetic oversampling with 0.956
+SMOTE with 0.965 better than Synthetic oversampling with 0.956
